@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'jobListings.apps.JobListingsConfig',
+    'applicationPipeline',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,8 +57,8 @@ ROOT_URLCONF = 'projeto_jobBoard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "jobListings/templates"],
-        'APP_DIRS': True,
+        'DIRS': [],  # fine to leave empty for app-level templates
+        'APP_DIRS': True,  # MUST be True
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -67,7 +69,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'projeto_jobBoard.wsgi.application'
 
