@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <h1>Search Jobs</h1>
+
+<h1>Find Your Next Job</h1>
+
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Job title (e.g. Driver, Cashier)" value="{{ request.GET.q }}">
+        
+        <input type="text" name="location" placeholder="City or Postcode" value="{{ request.GET.location }}">
+
+        <select name="type">
+            <option value="">All Job Types</option>
+            <option value="full_time">Full-time</option>
+            <option value="part_time">Part-time</option>
+            <option value="shift_work">Shift Work</option>
+        </select>
+
+        <button type="submit">Search Jobs</button>
+    </form>
+
+    <hr>
+
+    <ul>
+        {% for job in results %}
+            <li>
+                <strong>{{ job.title }}</strong> em {{ job.company }}<br>
+                <small>{{ job.location }} | {{ job.stack }} | {{ job.seniority }}</small>
+            </li>
+        {% empty %}
+            <li>No jobs found matching your criteria.</li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
