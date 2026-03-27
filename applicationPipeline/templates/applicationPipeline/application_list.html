@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Pipeline</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+
+        .status-applied { color: blue; }
+        .status-screening { color: orange; }
+        .status-interview { color: purple; }
+        .status-offer { color: green; }
+        .status-rejected { color: red; }
+    </style>
+</head>
+<body>
+    <h1>My Applications</h1>
+
+    <!-- 🔍 SEARCH + FILTER FORM -->
+    <form method="get" style="margin-bottom: 20px;">
+        <input 
+            type="text" 
+            name="search" 
+            placeholder="Search job title or company"
+            value="{{ search_query }}"
+        >
+
+        <select name="status">
+            <option value="">All Statuses</option>
+            <option value="applied" {% if status_filter == "applied" %}selected{% endif %}>Applied</option>
+            <option value="screening" {% if status_filter == "screening" %}selected{% endif %}>Screening</option>
+            <option value="interview" {% if status_filter == "interview" %}selected{% endif %}>Interview</option>
+            <option value="offer" {% if status_filter == "offer" %}selected{% endif %}>Offer</option>
+            <option value="rejected" {% if status_filter == "rejected" %}selected{% endif %}>Rejected</option>
+        </select>
+
+        <!-- 🔄 Sorting -->
+        <select name="sort">
+            <option value="">Sort</option>
+            <option value="newest" {% if sort == "newest" %}selected{% endif %}>Newest</option>
+            <option value="oldest" {% if sort == "oldest" %}selected{% endif %}>Oldest</option>
+        </select>
+
+        <button type="submit">Apply</button>
+    </form>
+
+    <!-- 📊 TABLE -->
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Company</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.job_title }}</td>
+                <td>{{ application.company }}</td>
+                <td class="status-{{ application.status }}">
+                    {{ application.status|capfirst }}
+                </td>
+                <td>{{ application.created_at }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No applications found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
