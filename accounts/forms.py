@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import User
+from applicationPipeline.models import Application
 
 class SignUpForm(UserCreationForm):
     ROLE_CHOICES = [
@@ -15,7 +16,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email")
+        fields = ("username", "email","first_name", "last_name")
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -34,3 +35,12 @@ class LoginForm(AuthenticationForm):
         label="Password",
         widget=forms.PasswordInput
     )
+
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ["job", "status"]
+        widgets = {
+            "status": forms.Select(choices=Application.STATUS_CHOICES)
+        }
