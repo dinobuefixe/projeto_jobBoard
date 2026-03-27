@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>{% block title %}Job Board{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'jobListings/style.css' %}">
 </head>
 <body>
     <header><h1>Job Board</h1></header>
