@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Job Board{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'jobListings/style.css' %}">
+</head>
+<body>
+
+<header>
+    <h1><a href="/">Job Board</a></h1>
+
+    <!-- BARRA DE PESQUISA GLOBAL -->
+    <form method="GET" action="{% url 'search' %}">
+        
+        <input type="text"
+               name="keyword"
+               placeholder="Job title (ex: Driver, Cashier)"
+               value="{{ request.GET.keyword }}">
+
+        <input type="text"
+               name="location"
+               placeholder="City or postcode"
+               value="{{ request.GET.location }}">
+
+        <select name="level">
+            <option value="">All Levels</option>
+
+            <option value="junior"
+                {% if request.GET.level == "junior" %}selected{% endif %}>
+                Junior
+            </option>
+
+            <option value="mid"
+                {% if request.GET.level == "mid" %}selected{% endif %}>
+                Mid
+            </option>
+
+            <option value="senior"
+                {% if request.GET.level == "senior" %}selected{% endif %}>
+                Senior
+            </option>
+        </select>
+
+        <button type="submit">Search</button>
+
+    </form>
+</header>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+</body>
+</html>

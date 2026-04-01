@@ -58,7 +58,7 @@ ROOT_URLCONF = 'projeto_jobBoard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'projeto_jobBoard' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

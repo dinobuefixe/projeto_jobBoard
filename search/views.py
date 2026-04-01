@@ -1,35 +1,25 @@
-from django.shortcuts import render
-from .models import JobListing
-from django.db.models import Q 
 from django.utils import timezone
-
-def search_view(request):
-    from django.shortcuts import render
-    from django.db.models import Q
-    from jobListings.models import JobListing  
-    from django.utils import timezone
+from django.shortcuts import render
+from django.db.models import Q
+from jobListings.models import JobListing
 
 def search_view(request):
     results = JobListing.objects.all()
 
     keyword = request.GET.get('keyword')
-    stack = request.GET.get('stack')
     location = request.GET.get('location')
-    seniority = request.GET.get('seniority')
+    level = request.GET.get('level')
 
     if keyword:
         results = results.filter(
             Q(title__icontains=keyword) |
-            Q(content__icontains=keyword) 
+            Q(content__icontains=keyword)
         )
-
-    if stack:
-        results = results.filter(stack__icontains=stack)
 
     if location:
         results = results.filter(location__icontains=location)
 
-    if seniority:
-        results = results.filter(level__iexact=seniority)  
+    if level:
+        results = results.filter(level__iexact=level)
 
-    return render(request, 'search/search.html', {'results': results})
+    return render(request, "search/search.html", {"results": results})
