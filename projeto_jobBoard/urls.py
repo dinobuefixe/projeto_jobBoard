@@ -24,5 +24,7 @@ urlpatterns = [
     path('application/', include('applicationPipeline.urls')),
     path('search/', include('search.urls')),
     path('accounts/', include('accounts.urls')),
+    path("company/", include("company.urls")),
+    path("jobs/", include("jobListings.urls")),
 ]
 

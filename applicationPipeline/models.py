@@ -11,8 +11,8 @@ class Application(models.Model):
         ("rejected", "Rejected"),
     ]
 
-    job = models.ForeignKey(JobListing, on_delete=models.CASCADE, related_name="applications")
-    applicant = models.ForeignKey(User, on_delete=models.CASCADE, related_name="applications")
+    job = models.ForeignKey(JobListing, null= True, on_delete=models.CASCADE, related_name="applications")
+    applicant = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="applications")
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="applied")
     created_at = models.DateTimeField(auto_now_add=True)

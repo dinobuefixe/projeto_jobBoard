@@ -1,31 +1,57 @@
-{% extends "base.html" %}
+<h1>Olá, {{ user.first_name }} {{ user.last_name }}</h1>
+<p><strong>Tipo de Conta:</strong> {{ user.type }}</p>
 
-{% block content %}
-<div class="container" style="max-width: 600px; margin: 40px auto;">
-    
-    <h2>Criar Candidatura</h2>
+<hr>
 
-    {% if user.is_authenticated %}
-        <form method="POST">
-            {% csrf_token %}
+{% if user.is_employer %}
+    <h2>Gestão da Empresa</h2>
 
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="job">Oferta de Trabalho</label>
-                {{ form.job }}
-            </div>
+    <a href="{% url 'create_job' %}" class="btn btn-primary">Criar Oferta de Emprego</a>
+    <a href="{% url 'edit_company' %}" class="btn btn-secondary">Configurar Empresa</a>
 
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="status">Estado</label>
-                {{ form.status }}
-            </div>
-
-            <button type="submit" class="btn btn-primary">Submeter Candidatura</button>
-        </form>
-
+    <h3>As suas ofertas de emprego</h3>
+    {% if jobs %}
+        <ul>
+            {% for job in jobs %}
+                <li>
+                    <strong>{{ job.title }}</strong> — {{ job.location }}
+                    <a href="{% url 'job_detail' job.pk %}">Ver</a>
+                </li>
+            {% endfor %}
+        </ul>
     {% else %}
-        <p>Precisas de estar autenticado para criar uma candidatura.</p>
-        <a href="{% url 'login' %}">Iniciar sessão</a>
+        <p>Ainda não criou nenhuma oferta.</p>
     {% endif %}
 
-</div>
-{% endblock %}
+    <h3>Candidaturas Recebidas</h3>
+    {% if applications %}
+        <ul>
+            {% for app in applications %}
+                <li>
+                    {{ app.applicant.username }} candidatou-se a <strong>{{ app.job.title }}</strong>
+                    — Estado: {{ app.status }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhuma candidatura recebida.</p>
+    {% endif %}
+{% endif %}
+
+{% if user.is_employee %}
+    <h2>As Suas Candidaturas</h2>
+
+    {% if applications %}
+        <ul>
+            {% for app in applications %}
+                <li>
+                    <strong>{{ app.job.title }}</strong> — {{ app.job.owner.username }}
+                    <br>
+                    Estado: {{ app.status }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ainda não se candidatou a nenhum emprego.</p>
+    {% endif %}
+{% endif %}

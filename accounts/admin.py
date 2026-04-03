@@ -5,7 +5,7 @@ from .forms import SignUpForm, LoginForm
 class UserAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Information about the user", {
-            "fields": ["first_name", "last_name", "username", "email"]
+            "fields": ["first_name", "last_name", "username", "email","type"]
         }),
     ]
 
