@@ -5,14 +5,15 @@
 {% block content %}
 <h1>{{ job.title }}</h1>
 
-<p><strong>Empresa:</strong> {{ job.company }}</p>
-<p><strong>Localização:</strong> {{ job.location }}</p>
-<p><strong>Nível:</strong> {{ job.level }}</p>
-<p><strong>Tipo de trabalho:</strong> {{ job.work }}</p>
-<p><strong>Salário:</strong> {{ job.salary_range }}</p>
+<p><strong>Company:</strong> {{ job.company }}</p>
+<p><strong>Location:</strong> {{ job.location }}</p>
+<p><strong>Level:</strong> {{ job.level }}</p>
+<p><strong>Job Type:</strong> {{ job.work }}</p>
+<p><strong>Salary:</strong> {{ job.salary_range }}</p>
 
 <p>{{ job.content }}</p>
-<a href="/aplicado.html"><button>Aplicar para trabalho</button></a>
-<br>    
-<a href="/">Voltar</a>
+
+<a href="/aplicado.html"><button>Apply for Job</button></a>
+<br>
+<a href="/">Back</a>
 {% endblock %}
