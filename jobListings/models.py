@@ -30,4 +30,3 @@ class JobListing(models.Model):
 
     def get_absolute_url(self):
         return reverse("job_detail", args=[self.id])
-

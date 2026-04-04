@@ -33,3 +33,6 @@ def create_job_view(request):
 
     return render(request, "jobs/create_job.html", {"form": form})
 
+def home(request):
+    recent_jobs = JobListing.objects.order_by('-date_published')[:5]
+    return render(request, 'jobListings/home.html', {'recent_jobs': recent_jobs})

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Dev Job Board{% endblock %}
+
+{% block content %}
+    <h1>Welcome to the Developer Job Board</h1>
+    <p>Connecting developers with their next big opportunity.</p>
+    
+    <div style="margin: 20px 0;">
+        <a href="{% url 'index' %}" style="padding: 10px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Browse All Jobs
+        </a>
+    </div>
+
+    <h3>Recently Added</h3>
+    <ul>
+        {% for job in recent_jobs %}
+            <li>
+                <strong>{{ job.title }}</strong> at {{ job.company }} 
+                <a href="{% url 'job_detail' job.id %}">View details</a>
+            </li>
+        {% empty %}
+            <li>No jobs available right now.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

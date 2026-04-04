@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% block title %}Job Listings{% endblock %}
@@ -24,3 +25,28 @@
     <a href="accounts/login/">Login
     </a>
 {% endblock %}
+=======
+{% extends "base.html" %}
+
+{% block title %}Job Listings{% endblock %}
+
+{% block content %}
+    <h1>Ofertas de Emprego</h1>
+
+    {% for job in job_list %}
+        <h2>
+            <a href="{{ job.get_absolute_url }}">
+                {{ job.title|upper }}
+            </a>
+        </h2>
+
+        <p><strong>Empresa:</strong> {{ job.company }}</p>
+        <p><strong>Nível:</strong> {{ job.level }}</p>
+        <p><strong>Tipo de trabalho:</strong> {{ job.work }}</p>
+
+        <hr>
+    {% empty %}
+        <p>Nenhuma vaga encontrada.</p>
+    {% endfor %}
+{% endblock %}
+>>>>>>> main
