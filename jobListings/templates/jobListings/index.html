@@ -1,6 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Job Listings{% endblock %}
-
 {% block content %}
+<div class="container mt-4">
+
+    <h1 class="mb-4">Vagas Disponíveis</h1>
+
+    {% if jobs %}
+        <div class="list-group">
+            {% for job in jobs %}
+                <a href="{{ job.get_absolute_url }}" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1">{{ job.title }}</h5>
+                    <p class="mb-1">{{ job.company.name }}</p>
+                    <small>{{ job.location }} • {{ job.level }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Não existem vagas no momento.</p>
+    {% endif %}
+
+</div>
 {% endblock %}

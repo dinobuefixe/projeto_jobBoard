@@ -89,3 +89,41 @@
     margin-top: 40px;
     opacity: 0.8;
 }
+
+.account-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-account,
+.btn-login,
+.btn-logout {
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s ease-in-out;
+}
+
+/* Botão principal */
+.btn-login,
+.btn-account {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-login:hover,
+.btn-account:hover {
+    background-color: #0056b3;
+}
+
+/* Botão de logout */
+.btn-logout {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-logout:hover {
+    background-color: #a71d2a;
+}

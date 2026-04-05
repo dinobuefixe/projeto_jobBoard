@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SignUpForm, LoginForm
 from django.contrib.auth.decorators import login_required
-from accounts.models import User
+from django.contrib.auth import get_user_model
+from applicationPipeline.models import Application  
+from jobListings.models import JobListing
+
+User = get_user_model()
 
 def signup_view(request):
     if request.method == 'POST':
@@ -27,28 +31,32 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form})
 
-
 @login_required
 def account_view(request, pk):
-    user = get_object_or_404(User, pk=pk)
+    user = request.user
 
-    if request.user.pk != user.pk:
-        return redirect("home")
+    jobs = None
+    received_applications = None
+    sent_applications = None
 
-    jobs = []
-    applications = []
-
+    # EMPLOYER
     if user.is_employer:
-        if hasattr(user, "company"):
-            jobs = user.company.jobs.all()
-            applications = Application.objects.filter(job__company=user.company)
+        # vagas da empresa
+        jobs = JobListing.objects.filter(company=user.company)
 
+        # candidaturas recebidas
+        received_applications = Application.objects.filter(job__company=user.company)
+
+    # EMPLOYEE
     if user.is_employee:
-        applications = Application.objects.filter(candidate=user)
+        # candidaturas enviadas
+        sent_applications = Application.objects.filter(candidate=user)
 
-    return render(request, "accounts/account.html", {
+    context = {
         "user": user,
         "jobs": jobs,
-        "applications": applications,
-    })
+        "applications": received_applications,   # para employer
+        "sent_applications": sent_applications,  # para employee
+    }
 
+    return render(request, "accounts/account.html", context)

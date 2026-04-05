@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Editar Candidatura de {{ application.candidate.username }}</h2>
+    <h4>Vaga: {{ application.job.title }}</h4>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-primary">Guardar Alterações</button>
+        <a href="{% url 'account' user.pk %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

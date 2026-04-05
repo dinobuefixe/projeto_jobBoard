@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h1>Olá, {{ user.first_name }} {{ user.last_name }}</h1>
 <p><strong>Tipo de Conta:</strong> {{ user.type }}</p>
 
@@ -24,12 +27,21 @@
     {% endif %}
 
     <h3>Candidaturas Recebidas</h3>
+
     {% if applications %}
         <ul>
             {% for app in applications %}
                 <li>
-                    {{ app.applicant.username }} candidatou-se a <strong>{{ app.job.title }}</strong>
-                    — Estado: {{ app.status }}
+                    {{ app.candidate.username }} candidatou-se a 
+                    <strong>{{ app.job.title }}</strong>
+                    — Estado: <strong>{{ app.get_status_display }}</strong>
+
+                    <br>
+
+                    <a href="{% url 'employer_edit_application' app.pk %}" 
+                       class="btn btn-sm btn-warning mt-1">
+                        Editar Candidatura
+                    </a>
                 </li>
             {% endfor %}
         </ul>
@@ -38,16 +50,29 @@
     {% endif %}
 {% endif %}
 
+
 {% if user.is_employee %}
     <h2>As Suas Candidaturas</h2>
 
-    {% if applications %}
+    {% if sent_applications %}
         <ul>
-            {% for app in applications %}
+            {% for app in sent_applications %}
                 <li>
-                    <strong>{{ app.job.title }}</strong> — {{ app.job.owner.username }}
+                    <strong>{{ app.job.title }}</strong> — {{ app.job.company.name }}
                     <br>
-                    Estado: {{ app.status }}
+                    Estado: {{ app.get_status_display }}
+
+                    <br>
+
+                    <a href="{% url 'edit_application' app.pk %}" class="btn btn-sm btn-warning mt-1">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'delete_application' app.pk %}" 
+                       class="btn btn-sm btn-danger mt-1"
+                       onclick="return confirm('Tem a certeza que deseja remover esta candidatura?');">
+                        Remover
+                    </a>
                 </li>
             {% endfor %}
         </ul>
@@ -55,3 +80,5 @@
         <p>Ainda não se candidatou a nenhum emprego.</p>
     {% endif %}
 {% endif %}
+
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.urls import reverse
-from company.models import Company  # use the real Company model
+from company.models import Company
 from django.conf import settings
 
 
@@ -9,7 +9,11 @@ class JobListing(models.Model):
     title = models.CharField(max_length=50)
     level = models.CharField(max_length=20)
     salary_range = models.CharField(max_length=20)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='jobs'
+    )
     location = models.CharField(max_length=100)
     work = models.CharField(max_length=100)
     content = models.CharField(max_length=500)

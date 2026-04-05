@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}JobBoard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 
-    <link rel="stylesheet" href="{% static 'jobListings/style.css' %}">
 </head>
 
 <body class="gradient-bg">
@@ -16,10 +16,22 @@
         <a href="/" class="logo">JobBoard</a>
     </div>
 
-    <nav class="nav-links">
-        <a href="{% url 'login' %}">Entrar</a>
-        <a href="{% url 'signup' %}" class="btn-register">Registar</a>
-    </nav>
+
+    <div class="account-buttons">
+        {% if user.is_authenticated %}
+            <a href="{% url 'account' user.pk %}" class="btn-account">Minha Conta</a>
+            {% csrf_token %}
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+
+        {% else %}
+            <a href="{% url 'login' %}" class="btn-login">Login / Registar</a>
+        {% endif %}
+    </div>
+
+
 </header>
 
 <section class="hero">

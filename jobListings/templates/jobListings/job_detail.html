@@ -1,24 +1,28 @@
 {% extends "base.html" %}
 
-{% block title %}{{ job.title }}{% endblock %}
-
 {% block content %}
-<h1>{{ job.title }}</h1>
+<div class="container mt-4">
 
-<p><strong>Company:</strong> {{ job.company }}</p>
-<p><strong>Location:</strong> {{ job.location }}</p>
-<p><strong>Level:</strong> {{ job.level }}</p>
-<p><strong>Job Type:</strong> {{ job.work }}</p>
-<p><strong>Salary:</strong> {{ job.salary_range }}</p>
+    <h1>{{ job.title }}</h1>
+    <h4>{{ job.company.name }}</h4>
 
-<p>{{ job.content }}</p>
+    <p><strong>Localização:</strong> {{ job.location }}</p>
+    <p><strong>Nível:</strong> {{ job.level }}</p>
+    <p><strong>Salário:</strong> {{ job.salary_range }}</p>
 
-<form action="{% url 'apply_to_job' job.id %}" method="POST">
-    {% csrf_token %}
-    <textarea name="message" placeholder="Optional message"></textarea>
-    <button type="submit">Apply for Job</button>
-</form>
+    <hr>
 
-<br>
-<a href="/">Back</a>
+    <p>{{ job.content }}</p>
+
+    {% if user.is_authenticated and user.is_employee %}
+        <a href="{% url 'apply_to_job' job.id %}" class="btn btn-primary mt-3">
+            Candidatar-me
+        </a>
+    {% else %}
+        <p class="text-muted mt-3">
+            Apenas utilizadores do tipo <strong>employee</strong> podem candidatar-se.
+        </p>
+    {% endif %}
+
+</div>
 {% endblock %}
