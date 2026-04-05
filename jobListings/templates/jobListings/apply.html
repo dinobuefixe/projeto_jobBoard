@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Apply for {{ job.title }}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="message" placeholder="Optional message"></textarea>
+    <button type="submit">Submit Application</button>
+</form>
+{% endblock %}

@@ -13,9 +13,11 @@
 
 <p>{{ job.content }}</p>
 
-<a href="{% url 'apply_to_job' job.id %}">
-    <button>Apply for Job</button>
-</a>
+<form action="{% url 'apply_to_job' job.id %}" method="POST">
+    {% csrf_token %}
+    <textarea name="message" placeholder="Optional message"></textarea>
+    <button type="submit">Apply for Job</button>
+</form>
 
 <br>
 <a href="/">Back</a>

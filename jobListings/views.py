@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import JobListing
 from .forms import JobForm
 from company.models import Company
+from applicationPipeline.services.applications_service import create_application
 
 def index(request):
     job_list = JobListing.objects.all()
@@ -11,6 +12,18 @@ def index(request):
 def job_detail(request, pk):
     job = get_object_or_404(JobListing, pk=pk)
     return render(request, "jobListings/job_detail.html", {"job": job})
+
+@login_required
+def apply_to_job_view(request, pk):
+    job = get_object_or_404(JobListing, pk=pk)
+    company = job.company
+
+    if request.method == "POST":
+        message = request.POST.get("message", "")
+        create_application(request.user, job, company, message)
+        return redirect("job_detail", pk=job.pk)
+
+    return render(request, "jobListings/apply.html", {"job": job})
 
 @login_required
 def create_job_view(request):
